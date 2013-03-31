@@ -10,6 +10,7 @@ ZSH_THEME="powerline"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias muttd='ssh -t -p 14690 dispatched.ch "TERM=screen-256color EDITOR=vim mutt"'
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
