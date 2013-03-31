@@ -78,6 +78,9 @@ alias grr='git remote rm'
 alias gpu='git pull'
 alias gcl='git clone'
 
+# open files with vim without 'open' command
+alias -s tex rb css sass haml js coffee=vim
+
 # NODE ->
 #export NODE_PATH="/usr/local/homebrew/lib/node"
 export NODE_PATH="/usr/local/lib/node"
