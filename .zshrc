@@ -12,6 +12,9 @@ ZSH_THEME="powerline"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias muttd='ssh -t -p 14690 dispatched.ch "TERM=screen-256color EDITOR=vim mutt"'
 
+# smart-case and use user
+alias ag='ag -S --pager=less'
+
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
 
@@ -38,13 +41,13 @@ alias muttd='ssh -t -p 14690 dispatched.ch "TERM=screen-256color EDITOR=vim mutt
 HISTSIZE=4000
 SAVEHIST=4000
 
-plugins=(git bundler last-working-dir vi-mode)
+plugins=(git bundler vi-mode)
 
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/Applications/MacVim.app/Contents/MacOS/:/Developer/usr/bin/:opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin/:/Users/preek/.rvm/bin
+export PATH=/Applications/MacVim.app/Contents/MacOS/:/usr/local/bin:/Developer/usr/bin/:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin/:/Users/preek/.rvm/bin
 
 
 # JAVA
@@ -94,6 +97,28 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
 
+
+# Debian VM
+alias debian_vm_start='VBoxManage startvm "Debian" --type headless'
+alias debian_vm_login='ssh munen@192.168.17.145'
+
+alias recomy_vm_start='VBoxManage startvm "Recomy - Debian" --type headless'
+
+recomy_vm_login() {
+  RECOMY_IP=$(VBoxManage guestproperty enumerate "Recomy - Debian" | grep IP | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])')
+  if [[ $RECOMY_IP != "" ]]
+  then
+    echo "Found Recomy box at: " $RECOMY_IP
+    echo "Connecting to Recomy box...\n\n==========================\n\n"
+
+    ssh munen@$RECOMY_IP
+  else
+    echo "No IP set yet. Sleep 1s and retry."
+    sleep 1
+    recomy_vm_login
+  fi
+}
+
 #export http_proxy=igw-ktsg-al.abxsec.com:8080
 #export KANTON=SG
 export DYLD_LIBRARY_PATH=/opt/oracle/instantclient_10_2
@@ -113,11 +138,11 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Paths
-unset RUBYOPT
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+#unset RUBYOPT
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # rbenv
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/node_modules/.bin # Add node executables to path
