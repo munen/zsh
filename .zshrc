@@ -10,7 +10,6 @@ ZSH_THEME="powerline"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias muttd='ssh -t -p 14690 dispatched.ch "TERM=screen-256color EDITOR=vim mutt"'
 
 # smart-case and use user
 alias ag='ag -S --pager=less'
@@ -47,14 +46,16 @@ plugins=(git bundler vi-mode)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/Applications/MacVim.app/Contents/MacOS/:/usr/local/bin:/Developer/usr/bin/:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin/:/Users/preek/.rvm/bin
-
+export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin:/Users/preek/.rvm/bin
 
 # JAVA
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
 
 # Never use haml with jRuby, because syntax checking will be very slow
-alias vim='PATH=/Users/preek/.rvm/gems/ruby-1.9.3-p0/bin/:$PATH vim'
+#alias vim='PATH=/Users/preek/.rvm/gems/ruby-1.9.3-p0/bin/:$PATH vim'
+# tmp fix for mavericks. no macvim available atm.
+#alias vim='/usr/bin/vim'
+
 
 export EDITOR=vim
 
@@ -63,7 +64,8 @@ alias sqlite3='sqlite3 -line'
 alias less='less -R' # Colors in Rails logs
 export LESS=-RFX
 
-export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
+# commented so homebrew does not complain
+#export DYLD_LIBRARY_PATH=/usr/local/mysql/lib/
 
 # git aliases
 alias cgs='clear; git status'
@@ -98,31 +100,29 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
 
 
+alias debian_vm_start='VBoxManage startvm "Debian - Rbenv+Rails" --type headless'
+
 # Debian VM
-alias debian_vm_start='VBoxManage startvm "Debian" --type headless'
-alias debian_vm_login='ssh munen@192.168.17.145'
-
-alias recomy_vm_start='VBoxManage startvm "Recomy - Debian" --type headless'
-
-recomy_vm_login() {
-  RECOMY_IP=$(VBoxManage guestproperty enumerate "Recomy - Debian" | grep IP | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])')
-  if [[ $RECOMY_IP != "" ]]
+debian_vm_login() {
+  DEBIAN_IP=$(VBoxManage guestproperty enumerate "Debian - Rbenv+Rails" | grep IP | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])')
+  if [[ $DEBIAN_IP != "" ]]
   then
-    echo "Found Recomy box at: " $RECOMY_IP
-    echo "Connecting to Recomy box...\n\n==========================\n\n"
+    echo "Found Debian box at: " $DEBIAN_IP
+    echo "Connecting to Debian box...\n\n==========================\n\n"
 
-    ssh munen@$RECOMY_IP
+    # hack, because i'm using port forwarding
+    ssh -p 2222 munen@127.0.0.1
+
+    #ssh munen@$DEBIAN_IP
   else
     echo "No IP set yet. Sleep 1s and retry."
     sleep 1
-    recomy_vm_login
+    debian_vm_login
   fi
 }
 
 #export http_proxy=igw-ktsg-al.abxsec.com:8080
 #export KANTON=SG
-export DYLD_LIBRARY_PATH=/opt/oracle/instantclient_10_2
-export LD_LIBRARY_PATH=/opt/oracle/instantclient_11_2
 
 # Key bindings
 bindkey "^p" history-beginning-search-backward
@@ -138,11 +138,11 @@ CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 
 # Paths
-#unset RUBYOPT
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+unset RUBYOPT
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/node_modules/.bin # Add node executables to path
@@ -151,3 +151,7 @@ PATH=$PATH:$HOME/node_modules/.bin # Add node executables to path
 
 # vi mode
 set -o vi
+
+
+# pivotaltracker
+source ~/.zsh/pivotal_tracker_api.sh
