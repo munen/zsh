@@ -155,3 +155,6 @@ set -o vi
 
 # pivotaltracker
 source ~/.zsh/pivotal_tracker_api.sh
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
