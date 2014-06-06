@@ -153,3 +153,5 @@ function ssh() {
 
 # pivotaltracker
 source ~/.zsh/pivotal_tracker_api.sh
+
+alias serve_directory="ruby -run -e httpd . -p 8080"
