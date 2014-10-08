@@ -44,7 +44,7 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
 Darwin)
   # Customize to your needs...
-  export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin:/Users/preek/.rvm/bin
+  export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin
 
   # JAVA
   export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
@@ -55,8 +55,6 @@ Darwin)
   # NODE
   export NODE_PATH="/usr/local/lib/node"
 
-  # Never use haml with jRuby, because syntax checking will be very slow
-  #alias vim='PATH=/Users/preek/.rvm/gems/ruby-1.9.3-p0/bin/:$PATH vim'
   # tmp fix for mavericks. no macvim available atm.
   #alias vim='/usr/bin/vim'
 
@@ -155,3 +153,10 @@ function ssh() {
 source ~/.zsh/pivotal_tracker_api.sh
 
 alias serve_directory="ruby -run -e httpd . -p 8080"
+
+# mass rename file extension
+# Usage:
+#   $ mmv *m4a *m4b
+autoload -U zmv
+alias mmv='noglob zmv -W'
+
