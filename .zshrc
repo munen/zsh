@@ -44,7 +44,7 @@ source $ZSH/oh-my-zsh.sh
 case `uname` in
 Darwin)
   # Customize to your needs...
-  export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin
+  export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/usr/local/bin/brew:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin
 
   # JAVA
   export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
@@ -117,6 +117,8 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
 
+alias e='emacs -nw'
+
 
 # Key bindings
 bindkey "^p" history-beginning-search-backward
@@ -136,6 +138,9 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 unsetopt correct_all
+
+# nvm
+source $(brew --prefix nvm)/nvm.sh
 
 # vi mode
 set -o vi
@@ -160,3 +165,4 @@ alias serve_directory="ruby -run -e httpd . -p 8080"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+export VIM_APP_DIR=/usr/local/Cellar/macvim/7.4-73_1/MacVim.app
