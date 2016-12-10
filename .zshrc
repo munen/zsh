@@ -188,3 +188,16 @@ alias dmenu_run="dmenu_run -fn arial"
 export TERM=xterm-256color
 
 # alias curl="proxychains curl"
+
+# Add Phils sourceme hook
+# 200ok.ch/contextual-helpers-with-zsh-hooks/index.html
+autoload -U add-zsh-hook
+
+# source .sourceme files
+load-local-conf() {
+  # check file exists, is regular file and is readable:
+  if [[ -f .sourceme && -r .sourceme ]]; then
+  	source .sourceme
+  fi
+}
+add-zsh-hook chpwd load-local-conf
