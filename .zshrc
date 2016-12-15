@@ -126,8 +126,7 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
 
-alias e='emacs -nw'
-
+alias e='emacsclient -nw'
 
 # Key bindings
 bindkey "^p" history-beginning-search-backward
