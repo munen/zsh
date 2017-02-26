@@ -200,3 +200,5 @@ load-local-conf() {
   fi
 }
 add-zsh-hook chpwd load-local-conf
+
+source ~/.sourceme
