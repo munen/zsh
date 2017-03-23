@@ -58,6 +58,11 @@ Darwin)
   # tmp fix for mavericks. no macvim available atm.
   #alias vim='/usr/bin/vim'
 
+  # Android Setup
+  export ANDROID_HOME=${HOME}/Library/Android/sdk
+  export PATH=${PATH}:${ANDROID_HOME}/tools
+  export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
   alias debian_vm_start='VBoxManage startvm "Debian - Rbenv+Rails" --type headless'
 
   # Debian VM
