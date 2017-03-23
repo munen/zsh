@@ -1,0 +1,3 @@
+# Collecture Live DB
+
+alias psql_collecture="ssh -t root@collecture.io \"su - postgres -c 'psql collecture'\""

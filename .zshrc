@@ -38,13 +38,15 @@ SAVEHIST=4000
 
 plugins=(git bundler vi-mode)
 
-
 source $ZSH/oh-my-zsh.sh
 
 case `uname` in
 Darwin)
   # Customize to your needs...
-  export PATH=/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/usr/local/bin/brew:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin
+  export PATH=/usr/local/bin/firefox:/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin:/Users/preek/.rvm/bin
+
+  # nvm
+  source $(brew --prefix nvm)/nvm.sh
 
   # JAVA
   #export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
@@ -55,6 +57,8 @@ Darwin)
   # NODE
   export NODE_PATH="/usr/local/lib/node"
 
+  # Never use haml with jRuby, because syntax checking will be very slow
+  #alias vim='PATH=/Users/preek/.rvm/gems/ruby-1.9.3-p0/bin/:$PATH vim'
   # tmp fix for mavericks. no macvim available atm.
   #alias vim='/usr/bin/vim'
 
@@ -86,10 +90,18 @@ Darwin)
   ;;
 Linux)
   alias ls='ls -F --color=auto'
+
+  # Activate NVM
+  source ~/.nvm/nvm.sh
+
+  # Scale GTK+ 3 apps for HiDPI
+  export GDK_SCALE=2
   ;;
 esac
 
 alias ls='ls -G'
+export EDITOR=e
+
 alias sqlite3='sqlite3 -line'
 alias less='less -R' # Colors in Rails logs
 export LESS=-RFX
@@ -120,15 +132,18 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
 
-alias e='emacs -nw'
-
-
 # Key bindings
 bindkey "^p" history-beginning-search-backward
 bindkey "^[n" history-beginning-search-forward
 bindkey -M viins '^r' history-incremental-pattern-search-backward
 bindkey -M vicmd '^r' history-incremental-pattern-search-backward
-bindkey -M vicmd v edit-command-line
+# I do not really want 'beep' to be bound to M+v, but normally M+v is bound to edit-command-line which is a problem, because I want M+v to be solely used by I3
+bindkey -M vicmd v beep
+
+# Edit current command line in emacs
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
@@ -140,11 +155,15 @@ COMPLETION_WAITING_DOTS="true"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-unsetopt correct_all
+# rails
+export PATH=./bin:$PATH
 
 # nvm
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+
+# disable zsh auto correct
+unsetopt correct_all
 
 # vi mode
 set -o vi
@@ -172,5 +191,26 @@ alias mmv='noglob zmv -W'
 alias e='emacsclient -nw'
 
 export VIM_APP_DIR=/usr/local/Cellar/macvim/7.4-73_1/MacVim.app
+
+alias slime='tmux new-session -s default irb'
+
+alias dmenu_run="dmenu_run -fn arial"
+
+export TERM=xterm-256color
+
+# alias curl="proxychains curl"
+
+# Add Phils sourceme hook
+# 200ok.ch/contextual-helpers-with-zsh-hooks/index.html
+autoload -U add-zsh-hook
+
+# source .sourceme files
+load-local-conf() {
+  # check file exists, is regular file and is readable:
+  if [[ -f .sourceme && -r .sourceme ]]; then
+  	source .sourceme
+  fi
+}
+add-zsh-hook chpwd load-local-conf
 
 export EDITOR='emacsclient -nw'
