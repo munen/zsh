@@ -47,6 +47,7 @@ Darwin)
 
   # nvm
   source $(brew --prefix nvm)/nvm.sh
+  export NVM_DIR=~/.nvm
 
   # JAVA
   #export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
@@ -157,10 +158,6 @@ eval "$(rbenv init -)"
 
 # rails
 export PATH=./bin:$PATH
-
-# nvm
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
 
 # disable zsh auto correct
 unsetopt correct_all
