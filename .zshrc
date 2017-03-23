@@ -46,8 +46,8 @@ Darwin)
   export PATH=/usr/local/bin/firefox:/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin:/Users/preek/.rvm/bin
 
   # nvm
-  source $(brew --prefix nvm)/nvm.sh
   export NVM_DIR=~/.nvm
+  source $(brew --prefix nvm)/nvm.sh
 
   # JAVA
   #export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
