@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 
 # smart-case and use user
 alias ag='ag -S --pager=less'
@@ -94,7 +94,7 @@ Linux)
   ;;
 esac
 
-export EDITOR=e
+export EDITOR='emacsclient -nw'
 
 alias sqlite3='sqlite3 -line'
 alias less='less -R' # Colors in Rails logs
@@ -202,3 +202,26 @@ load-local-conf() {
 add-zsh-hook chpwd load-local-conf
 
 source ~/.sourceme
+
+
+# automatically load `.nvmrc` files
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
