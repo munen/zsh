@@ -46,11 +46,12 @@ Darwin)
   export PATH=/usr/local/bin/firefox:/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:/Developer/usr/bin:opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:/usr/local/mysql/bin:/usr/local/git/bin:/Applications/ImageMagick/bin:/usr/local/sbin:/usr/texbin:/Users/preek/.rvm/bin
 
   # nvm
+  export NVM_DIR=~/.nvm
   source $(brew --prefix nvm)/nvm.sh
 
   # JAVA
-  export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
-
+  #export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0u.jdk/Contents/Home
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
   # Added by the Heroku Toolbelt
   export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -62,11 +63,16 @@ Darwin)
   # tmp fix for mavericks. no macvim available atm.
   #alias vim='/usr/bin/vim'
 
+  # Android Setup
+  export ANDROID_HOME=${HOME}/Library/Android/sdk
+  export PATH=${PATH}:${ANDROID_HOME}/tools
+  export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
   alias debian_vm_start='VBoxManage startvm "Debian - Rbenv+Rails" --type headless'
 
   # Debian VM
   debian_vm_login() {
-    DEBIAN_IP=$(VBoxManage guestproperty enumerate "Debian - Rbenv+Rails" | grep IP | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])')
+    DEBIAN_IP=$(VBoxManage guestproperty enumerate "Voicerepublic" | grep IP | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])')
     if [[ $DEBIAN_IP != "" ]]
     then
       echo "Found Debian box at: " $DEBIAN_IP
@@ -95,6 +101,7 @@ Linux)
 esac
 
 export EDITOR='emacsclient -nw'
+alias ls='ls -G'
 
 alias sqlite3='sqlite3 -line'
 alias less='less -R' # Colors in Rails logs
@@ -120,13 +127,11 @@ alias gcl='git clone'
 alias -s tex rb css sass haml js coffee=vim
 
 # SSH Tunnel
-alias ssh_tunnel='echo "Establishing SOCKS at localhost:9999"; ssh -D 9999 app@staging.voicerepublic.com'
+alias ssh_tunnel='echo "Establishing SOCKS at localhost:9999"; ssh -D 9999 lafo@dublin.zhaw.ch'
 alias ips="sudo ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 alias pgdump='pg_dump dental_development > ~/pgdump_`date +%F`.sql && gzip ~/pgdump_`date +%F`.sql && ls -lh pgdump_*'
-
-alias e='emacsclient -nw'
 
 # Key bindings
 bindkey "^p" history-beginning-search-backward
@@ -154,6 +159,7 @@ eval "$(rbenv init -)"
 # rails
 export PATH=./bin:$PATH
 
+# disable zsh auto correct
 unsetopt correct_all
 
 # vi mode
@@ -162,11 +168,11 @@ set -o vi
 # Recomy
 export JS_DRIVER=phantomjs
 
-function ssh() {
-    dbus-send --session /net/sf/roxterm/Options net.sf.roxterm.Options.SetColourScheme string:$ROXTERM_ID string:Tango
-    /usr/bin/ssh $@
-    dbus-send --session /net/sf/roxterm/Options net.sf.roxterm.Options.SetColourScheme string:$ROXTERM_ID string:solarized-dark
-}
+# function ssh() {
+#     dbus-send --session /net/sf/roxterm/Options net.sf.roxterm.Options.SetColourScheme string:$ROXTERM_ID string:Tango
+#     /usr/bin/ssh $@
+#     dbus-send --session /net/sf/roxterm/Options net.sf.roxterm.Options.SetColourScheme string:$ROXTERM_ID string:solarized-dark
+# }
 
 # pivotaltracker
 source ~/.zsh/pivotal_tracker_api.sh
@@ -179,7 +185,10 @@ alias serve_directory="ruby -run -e httpd . -p 8080"
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+alias e='emacsclient -nw'
+
 export VIM_APP_DIR=/usr/local/Cellar/macvim/7.4-73_1/MacVim.app
+
 alias slime='tmux new-session -s default irb'
 
 alias dmenu_run="dmenu_run -fn arial"
@@ -202,7 +211,6 @@ load-local-conf() {
 add-zsh-hook chpwd load-local-conf
 
 source ~/.sourceme
-
 
 # automatically load `.nvmrc` files
 autoload -U add-zsh-hook
