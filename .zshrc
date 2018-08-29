@@ -174,9 +174,6 @@ export JS_DRIVER=phantomjs
 #     dbus-send --session /net/sf/roxterm/Options net.sf.roxterm.Options.SetColourScheme string:$ROXTERM_ID string:solarized-dark
 # }
 
-# pivotaltracker
-source ~/.zsh/pivotal_tracker_api.sh
-
 alias serve_directory="ruby -run -e httpd . -p 8080"
 
 # mass rename file extension
@@ -233,3 +230,15 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# Manually sync the client to a swiss NTP server and inform how far
+# off the clock is
+function ntp() {
+  sudo service ntp stop
+  sudo ntpdate ch.pool.ntp.org
+  sudo service ntp start
+}
+
+# Circumvent:
+#  gpg: signing failed: Inappropriate ioctl for device
+export GPG_TTY=$(tty)
