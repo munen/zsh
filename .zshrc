@@ -243,3 +243,17 @@ function ntp() {
 # Circumvent:
 #  gpg: signing failed: Inappropriate ioctl for device
 export GPG_TTY=$(tty)
+
+
+alias xr0='xrandr --output eDP-1 --primary --auto --output HDMI-1 --off'
+alias xr1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto'
+alias xr-1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto --right-of eDP-1'
+
+
+# GUIX
+export PATH="/home/munen/.config/guix/current/bin${PATH:+:}$PATH"
+export PATH="/home/munen/.guix-profile/bin${PATH:+:}$PATH"
+export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+export GUILE_LOAD_PATH="/home/munen/.guix-profile/share/guile/site/2.2${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
+export GUILE_LOAD_COMPILED_PATH="/home/munen/.guix-profile/lib/guile/2.2/site-ccache:/home/munen/.guix-profile/share/guile/site/2.2${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
+export INFOPATH="/home/munen/.guix-profile/share/info${INFOPATH:+:}$INFOPATH"
