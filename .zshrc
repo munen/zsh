@@ -144,7 +144,8 @@ bindkey -M vicmd v beep
 # Edit current command line in emacs
 autoload -z edit-command-line
 zle -N edit-command-line
-bindkey "^X^E" edit-command-line
+# M-v will lauch $EDITOR
+bindkey -M vicmd v edit-command-line
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"
