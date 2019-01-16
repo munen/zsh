@@ -90,7 +90,7 @@ Darwin)
   }
   ;;
 Linux)
-  alias ls='ls -F --color=auto'
+  alias ls='ls -G -F --color=auto'
 
   # Activate NVM
   source ~/.nvm/nvm.sh
@@ -101,7 +101,6 @@ Linux)
 esac
 
 export EDITOR='emacsclient -nw'
-alias ls='ls -G'
 
 alias sqlite3='sqlite3 -line'
 alias less='less -R' # Colors in Rails logs
@@ -244,16 +243,20 @@ function ntp() {
 #  gpg: signing failed: Inappropriate ioctl for device
 export GPG_TTY=$(tty)
 
-
+# Shortcuts for external screens
 alias xr0='xrandr --output eDP-1 --primary --auto --output HDMI-1 --off'
 alias xr1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto'
 alias xr-1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto --right-of eDP-1'
 
+# Autojump
+. /usr/share/autojump/autojump.sh
 
 # GUIX
 export PATH="/home/munen/.config/guix/current/bin${PATH:+:}$PATH"
-export PATH="/home/munen/.guix-profile/bin${PATH:+:}$PATH"
-export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+export PATH="/home/munen/.guix-profile/bin:/home/munen/.guix-profile/sbin${PATH:+:}$PATH"
+export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 export GUILE_LOAD_PATH="/home/munen/.guix-profile/share/guile/site/2.2${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
 export GUILE_LOAD_COMPILED_PATH="/home/munen/.guix-profile/lib/guile/2.2/site-ccache:/home/munen/.guix-profile/share/guile/site/2.2${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
 export INFOPATH="/home/munen/.guix-profile/share/info${INFOPATH:+:}$INFOPATH"
+
+export XDG_DATA_DIR=/usr/share/glib-2.0/schemas
