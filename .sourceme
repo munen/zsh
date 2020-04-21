@@ -1,3 +1,37 @@
 # Collecture Live DB
-
 alias psql_collecture="ssh -t root@collecture.io \"su - postgres -c 'psql collecture'\""
+
+function docker-compose() {
+  if [ "$1" == "down" ]
+  then
+    print "Would you rather call 'docker-compose stop'?(y/n)"
+    read answer
+    if echo "$answer" | grep -iq "^n"; then
+      print "OK, containers are stopped AND removed!"
+      /usr/bin/docker-compose down
+    elif echo "$answer" | grep -iq "^y"; then
+      print "Good choice, containers are stopped, but not removed!"
+      /usr/bin/docker-compose stop
+    else
+      print "Neither 'y' nor 'n'. Doing nothing."
+    fi
+  else
+    /usr/bin/docker-compose "$@"
+  fi
+}
+
+function esm() {
+  e .sourceme
+  source .sourceme
+}
+
+# When running emacs convert `path[:line[:column]]` to
+# `[+line[:column]] path`
+function e() {
+  # convert 'path:123:321' to 'path +123:321'
+  args=`echo $1 | sed 's/:\([0-9]\+\(:[0-9]\+\)\?\)\+$/ +\1/'`
+  # reverse args
+  rargs=`echo $args | tr ' ' '\n' | tac | tr '\n' ' '`
+  # eval to unquote (alt to xargs)
+  eval /usr/bin/emacsclient -nw -t $rargs
+}

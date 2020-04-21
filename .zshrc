@@ -159,6 +159,8 @@ eval "$(rbenv init -)"
 # rails
 export PATH=./bin:$PATH
 
+export PATH=$HOME/bin:$PATH
+
 # disable zsh auto correct
 unsetopt correct_all
 
@@ -209,6 +211,22 @@ add-zsh-hook chpwd load-local-conf
 
 source ~/.sourceme
 
+# The SOURCEME_REPO is the path where your clone of the sourceme repo
+# lives.
+export SOURCEME_REPO=~/src/200ok/sourceme
+
+# The SOURCEME_PREFIX is used as a namespace. It will be used to name
+# the symlink from you project's root directory to the corresponding
+# directory in the shared sourceme repo. the prefix should be added to
+# your user's global gitignore
+export SOURCEME_PREFIX=.ok
+
+# load config from .zshrc.d
+# For example that used for shared project sourceme and doc files
+for zshfile in ~/.zshrc.d/*[^~]; do
+  source ${zshfile}
+done
+
 # automatically load `.nvmrc` files
 autoload -U add-zsh-hook
 load-nvmrc() {
@@ -244,12 +262,15 @@ function ntp() {
 export GPG_TTY=$(tty)
 
 # Shortcuts for external screens
-alias xr0='xrandr --output eDP-1 --primary --auto --output HDMI-1 --off'
-alias xr1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto'
-alias xr-1='xrandr --output eDP-1 --primary --auto --output HDMI-1 --auto --right-of eDP-1'
+alias xr0='xrandr --output eDP1 --primary --auto --output HDMI1 --off'
+alias xr1='xrandr --output eDP1 --primary --auto --output HDMI1 --auto'
+alias xr-1='xrandr --output eDP1 --primary --auto --output HDMI1 --auto --right-of eDP-1'
 
 # Autojump
 . /usr/share/autojump/autojump.sh
+
+# Pip binaries
+export PATH="/home/munen/.local/bin/:$PATH"
 
 # GUIX
 export PATH="/home/munen/.config/guix/current/bin${PATH:+:}$PATH"
