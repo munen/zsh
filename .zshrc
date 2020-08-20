@@ -282,3 +282,10 @@ export GUILE_LOAD_COMPILED_PATH="/home/munen/.guix-profile/lib/guile/2.2/site-cc
 export INFOPATH="/home/munen/.guix-profile/share/info${INFOPATH:+:}$INFOPATH"
 
 export XDG_DATA_DIR=/usr/share/glib-2.0/schemas
+
+function ssh() {
+  kitty @ set-colors foreground=#222
+  kitty @ set-colors background=#BA8
+  /usr/bin/ssh $@
+  kitty @ set-colors --reset
+}
