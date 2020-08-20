@@ -90,13 +90,10 @@ Darwin)
   }
   ;;
 Linux)
-  alias ls='ls -G -F --color=auto'
+  alias ls='ls -F --color=auto'
 
   # Activate NVM
   source ~/.nvm/nvm.sh
-
-  # Scale GTK+ 3 apps for HiDPI
-  export GDK_SCALE=2
   ;;
 esac
 
@@ -262,9 +259,13 @@ function ntp() {
 export GPG_TTY=$(tty)
 
 # Shortcuts for external screens
-alias xr0='xrandr --output eDP1 --primary --auto --output HDMI1 --off'
-alias xr1='xrandr --output eDP1 --primary --auto --output HDMI1 --auto'
-alias xr-1='xrandr --output eDP1 --primary --auto --output HDMI1 --auto --right-of eDP-1'
+SCREEN1=DP-2
+SCREEN2=HDMI-0
+PRIMARY_RESOLUTION=3840x2160
+XRANDR="xrandr --output $SCREEN1 --panning $PRIMARY_RESOLUTION --primary --auto --output $SCREEN2"
+alias xr0="$XRANDR --off"
+alias xr1="$XRANDR --auto" # mirror
+alias xr2="$XRANDR --auto --right-of $SCREEN1 --scale-from $PRIMARY_RESOLUTION"
 
 # Autojump
 . /usr/share/autojump/autojump.sh
